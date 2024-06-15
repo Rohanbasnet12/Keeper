@@ -1,21 +1,13 @@
-import React, { useState } from "react";
-import { FaPlus } from "react-icons/fa";
+import React from "react";
+import { FaPlus, FaTimes } from "react-icons/fa"; // Ensure correct import
 
-const Button = () => {
-  const [showForm, setShowForm] = useState(false);
-
-  function handleClick() {
-    setShowForm(true);
-  }
-
+const Button = ({ onClick, content }) => {
   return (
     <div
       id="submit-button"
       className="fixed bottom-0 right-0 bg-white w-14 h-14 m-8 flex items-center justify-center text-2xl rounded-full"
     >
-      <button onClick={handleClick}>
-        <FaPlus />
-      </button>
+      <button onClick={onClick}>{content ? <FaTimes /> : <FaPlus />}</button>
     </div>
   );
 };

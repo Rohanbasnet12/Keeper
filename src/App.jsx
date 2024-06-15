@@ -5,11 +5,17 @@ import Button from "./assets/Components/Button";
 import AddTaskForm from "./assets/Components/AddTaskForm";
 
 function App() {
+  const [showForm, setShowForm] = useState(false);
+
+  function handleClick() {
+    setShowForm((prev) => !prev); // Toggles the form visibility
+  }
+
   return (
     <>
       <Background />
-      <AddTaskForm />
-      <Button />
+      <Button onClick={handleClick} content={showForm} />
+      {showForm && <AddTaskForm />}
     </>
   );
 }
