@@ -2,7 +2,8 @@ import { useState } from "react";
 import "./App.css";
 import Background from "./assets/Components/Background";
 import Button from "./assets/Components/Button";
-import AddTaskForm from "./assets/Components/AddTaskForm";
+import AddNoteForm from "./assets/Components/AddNoteForm";
+import Note from "./assets/Components/Note";
 
 function App() {
   const [showForm, setShowForm] = useState(false);
@@ -12,11 +13,12 @@ function App() {
   }
 
   return (
-    <>
+    <div id="app" className="overflow-y-scroll">
       <Background />
       <Button onClick={handleClick} content={showForm} />
-      {showForm && <AddTaskForm />}
-    </>
+      {showForm && <AddNoteForm />}
+      <Note />
+    </div>
   );
 }
 
