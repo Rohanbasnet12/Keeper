@@ -1,12 +1,21 @@
-import React, { useState } from "react";
-import { v4 as uuidv4 } from "uuid";
+import React, { useState, useEffect } from "react";
 
 const AddNoteForm = (props) => {
   const [note, setNote] = useState({
-    id: "",
     title: "",
     content: "",
   });
+
+  useEffect(() => {
+    if (props.isEditing && props.currentNote) {
+      setNote(props.currentNote);
+    } else {
+      setNote({
+        title: "",
+        content: "",
+      });
+    }
+  }, [props.isEditing, props.currentNote]);
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -21,10 +30,12 @@ const AddNoteForm = (props) => {
 
   function handleSubmit(event) {
     event.preventDefault();
-    const newNote = { ...note, id: uuidv4() }; // Generate a unique ID for the new note
-    props.onAdd(newNote);
+    if (props.isEditing) {
+      props.onEdit(note);
+    } else {
+      props.onAdd(note);
+    }
     setNote({
-      id: "",
       title: "",
       content: "",
     });
@@ -63,7 +74,7 @@ const AddNoteForm = (props) => {
         />
 
         <button className="bg-green-500 text-white text-xl font-bold w-full py-3 text-center rounded-xl my-3">
-          Add
+          {props.isEditing ? "Update" : "Add"}
         </button>
       </form>
     </div>

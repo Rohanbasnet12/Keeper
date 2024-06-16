@@ -1,7 +1,7 @@
 import React from "react";
 import { FaPen } from "react-icons/fa";
 
-const Note = ({ notes }) => {
+const Note = ({ notes, onDelete, onEdit }) => {
   return (
     <div className="notes-container grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4 fixed w-full h-full top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 overflow-y-scroll">
       {notes.map((note) => (
@@ -19,10 +19,10 @@ const Note = ({ notes }) => {
           </div>
           <div className="buttons text-white flex items-center justify-between">
             <div className="deleteBtn bg-red-700 py-1 px-3 rounded-md">
-              <button>Delete</button>
+              <button onClick={() => onDelete(note.id)}>Delete</button>
             </div>
             <div className="editBtn">
-              <button>
+              <button onClick={() => onEdit(note)}>
                 <FaPen />
               </button>
             </div>
