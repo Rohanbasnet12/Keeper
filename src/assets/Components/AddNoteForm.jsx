@@ -1,24 +1,34 @@
 import React, { useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 
-const AddNoteForm = () => {
-  const [task, setTask] = useState({
+const AddNoteForm = (props) => {
+  const [note, setNote] = useState({
+    id: "",
     title: "",
     content: "",
   });
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    setTask({
-      title: "",
-      content: "",
+  function handleChange(event) {
+    const { name, value } = event.target;
+
+    setNote((prevNote) => {
+      return {
+        ...prevNote,
+        [name]: value,
+      };
     });
   }
 
-  function handleInputChange(e) {
-    const { name, value } = e.target;
-    setTask((preValue) => {
-      return { ...preValue, [name]: value };
+  function handleSubmit(event) {
+    event.preventDefault();
+    const newNote = { ...note, id: uuidv4() }; // Generate a unique ID for the new note
+    props.onAdd(newNote);
+    setNote({
+      id: "",
+      title: "",
+      content: "",
     });
+    props.onHideForm();
   }
 
   return (
@@ -31,8 +41,8 @@ const AddNoteForm = () => {
           id="title"
           name="title"
           type="text"
-          value={task.title}
-          onChange={handleInputChange}
+          value={note.title}
+          onChange={handleChange}
           required
           placeholder="title"
           className="w-full py-3 px-4 rounded-md bg-stone-200 outline-none"
@@ -43,12 +53,13 @@ const AddNoteForm = () => {
         <textarea
           id="content"
           name="content"
-          value={task.content}
-          onChange={handleInputChange}
+          value={note.content}
+          onChange={handleChange}
           placeholder="Take a note..."
           rows="3"
           required
           className="w-full py-3 px-4 rounded-md bg-stone-200 outline-none"
+          maxLength="180"
         />
 
         <button className="bg-green-500 text-white text-xl font-bold w-full py-3 text-center rounded-xl my-3">
